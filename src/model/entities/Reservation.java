@@ -41,18 +41,28 @@ public class Reservation {
 
     }
 
-    public void updateDates(LocalDate checkIn, LocalDate checkOut) {
+    public String updateDates(LocalDate checkIn, LocalDate checkOut) {
+
+        LocalDate.now();
+        if (checkIn.isBefore(LocalDate.now()) || checkOut.isBefore(LocalDate.now())) {
+            return "Reservation dates for update must be future dates";
+        }
+        if (!checkOut.isAfter(checkIn)) {
+            return "Check-out date must be after check-in date";
+        }
         this.checkIn = checkIn;
         this.checkOut = checkOut;
+        return null;
     }
 
-    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    @Override
-    public String toString() {
-        return "Room " + roomNumber +
-                ", check-In: " + getCheckIn().format(dtf) +
-                ", check-Out: " + getCheckOut().format(dtf) +
-                ", " + duration() + " nights";
+        public String toString() {
+            return "Room " + roomNumber +
+                    ", check-In: " + getCheckIn().format(dtf) +
+                    ", check-Out: " + getCheckOut().format(dtf) +
+                    ", " + duration() + " nights";
+
+        }
     }
-}
+
